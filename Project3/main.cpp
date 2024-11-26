@@ -4,32 +4,32 @@
 import Binary;
 
 void printMenu() {
-    std::cout << "\n1. Ââåñòè äâîè÷íîå ÷èñëî ñ êëàâèàòóðû\n"
-        << "2. Ââåñòè äåñÿòè÷íîå ÷èñëî ñ êëàâèàòóðû\n"
-        << "3. Ââåñòè äâîè÷íîå ÷èñëî èç ôàéëà\n"
-        << "4. Âûâåñòè äâîè÷íîå ÷èñëî íà ýêðàí\n"
-        << "5. Âûâåñòè äåñÿòè÷íîå ÷èñëî íà ýêðàí\n"
-        << "6. Ñîõðàíèòü äâîè÷íîå ÷èñëî â ôàéë\n"
-        << "7. Âûïîëíèòü îïåðàöèþ +\n"
-        << "8. Âûïîëíèòü îïåðàöèþ -\n"
-        << "9. Âûïîëíèòü îïåðàöèþ *\n"
-        << "10. Âûïîëíèòü îïåðàöèþ /\n"
-        << "11. Âûïîëíèòü îïåðàöèþ ==\n"
-        << "12. Âûïîëíèòü îïåðàöèþ <=>\n"
-        << "13. Âûïîëíèòü îïåðàöèþ !=\n"
-        << "14. Âûïîëíèòü îïåðàöèþ <\n"
-        << "15. Âûïîëíèòü îïåðàöèþ >\n"
-        << "16. Âûïîëíèòü îïåðàöèþ <=\n"
-        << "17. Âûïîëíèòü îïåðàöèþ >=\n"
-        << "18. Âûõîä\n"
-        << "Âûáåðèòå äåéñòâèå: ";
+    std::cout << "\n1. Ð’Ð²ÐµÑÑ‚Ð¸ Ð´Ð²Ð¾Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ñ ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñ‹\n"
+        << "2. Ð’Ð²ÐµÑÑ‚Ð¸ Ð´ÐµÑÑÑ‚Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ñ ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñ‹\n"
+        << "3. Ð’Ð²ÐµÑÑ‚Ð¸ Ð´Ð²Ð¾Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð¸Ð· Ñ„Ð°Ð¹Ð»Ð°\n"
+        << "4. Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð´Ð²Ð¾Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð½Ð° ÑÐºÑ€Ð°Ð½\n"
+        << "5. Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð´ÐµÑÑÑ‚Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð½Ð° ÑÐºÑ€Ð°Ð½\n"
+        << "6. Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð´Ð²Ð¾Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð² Ñ„Ð°Ð¹Ð»\n"
+        << "7. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ +\n"
+        << "8. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ -\n"
+        << "9. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ *\n"
+        << "10. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ /\n"
+        << "11. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ ==\n"
+        << "12. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ <=>\n"
+        << "13. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ !=\n"
+        << "14. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ <\n"
+        << "15. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ >\n"
+        << "16. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ <=\n"
+        << "17. Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ >=\n"
+        << "18. Ð’Ñ‹Ñ…Ð¾Ð´\n"
+        << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ: ";
 }
 Binary input_binary() {
     int size;  
     std::string binary_x;
-    std::cout << "Ââåäèòå ðàçìåð -> ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ -> ";
     std::cin >> size;
-    std::cout << "Ââåäèòå äâîè÷íîå ÷èñëî -> ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð²Ð¾Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ -> ";
     std::cin >> binary_x;
     Binary binary(size);
     binary.fromBinaryString(binary_x);
@@ -38,9 +38,9 @@ Binary input_binary() {
 Binary input_decimal() {
     int size;
     int x;
-    std::cout << "Ââåäèòå ðàçìåð -> ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ -> ";
     std::cin >> size;
-    std::cout << "Ââåäèòå äåñÿòè÷íîå ÷èñëî -> ";
+    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´ÐµÑÑÑ‚Ð¸Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ -> ";
     std::cin >> x;
     Binary binary(size);
     binary.fromDecimal(x);
@@ -51,11 +51,11 @@ int main() {
     Binary binary;
     int decimal_x, size;
     std::string binary_x, filename;
-    bool res;
+    bool res, exit = false;
     int choice;
     std::ifstream in_file;
     std::ofstream out_file;
-    while (true) {
+    while (!exit) {
         try {
             printMenu();
             std::cin >> choice;
@@ -68,7 +68,7 @@ int main() {
                 binary = input_decimal();
                 break;
             case 3:
-                std::cout << "Ââåäèòå íàçâàíèå ôàéëû -> ";
+                std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ñ‹ -> ";
                 std::cin >> filename;
                 in_file.open(filename);
                 if (in_file.is_open())
@@ -80,70 +80,113 @@ int main() {
                 }
                 else 
                 {
-                    std::cout << "Íå óäàëîñü îòêðûòü ôàéë." << std::endl;
+                    std::cout << "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»." << std::endl;
                 }
                 break;
             case 4:
-                std::cout << "Òåêóùåå ÷èñëî (Äâîè÷íûé âèä): " << binary.toBinaryString() << std::endl;
+                std::cout << "Ð¢ÐµÐºÑƒÑ‰ÐµÐµ Ñ‡Ð¸ÑÐ»Ð¾ (Ð”Ð²Ð¾Ð¸Ñ‡Ð½Ñ‹Ð¹ Ð²Ð¸Ð´): " << binary.toBinaryString() << std::endl;
                 break;
             case 5:
-                std::cout << "Òåêóùåå ÷èñëî (Äåñÿòè÷íûé âèä): " << binary.toDecimal() << std::endl;
+                std::cout << "Ð¢ÐµÐºÑƒÑ‰ÐµÐµ Ñ‡Ð¸ÑÐ»Ð¾ (Ð”ÐµÑÑÑ‚Ð¸Ñ‡Ð½Ñ‹Ð¹ Ð²Ð¸Ð´): " << binary.toDecimal() << std::endl;
                 break;
             case 6:
-                std::cout << "Ââåäèòå íàçâàíèå ôàéëû -> ";
+                std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð° -> ";
                 std::cin >> filename;
                 out_file.open(filename);
                 if (out_file.is_open()) 
                 {
-                    out_file << binary_x << std::endl;
+                    out_file << binary.toBinaryString() << std::endl;
                     out_file.close();
                 }
                 else 
                 {
-                    std::cout << "Íå óäàëîñü îòêðûòü ôàéë." << std::endl;
+                    std::cout << "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»." << std::endl;
                 }
                 break;
             case 7:
-                binary = binary + input_binary();
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    binary = binary + input_binary();
                 break;
             case 8:
-                binary = binary - input_binary();
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    binary = binary - input_binary();
                 break;
             case 9:
-                binary = binary * input_binary();
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    binary = binary * input_binary();
                 break;
             case 10:
-                binary = binary / input_binary();
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    binary = binary / input_binary();
                 break;
             case 11:
-                std::cout << (binary == input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    std::cout << (binary == input_binary() ? "True" : "False") << std::endl;
                 break;
             case 12:
-                std::cout << (binary == input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else 
+                {
+                    std::cout << std::endl;
+                    std::strong_ordering bin = binary <=> input_binary();
+                    if (bin == std::strong_ordering::equal)
+                        std::cout << "=" << std::endl;
+                    else if (bin == std::strong_ordering::greater)
+                        std::cout << ">" << std::endl;
+                    else if (bin == std::strong_ordering::less)
+                        std::cout << "<" << std::endl;
+                }
                 break;
             case 13:
-                std::cout << (binary != input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    std::cout << (binary != input_binary() ? "True" : "False") << std::endl;
                 break;
             case 14:
-                std::cout << (binary < input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    std::cout << (binary < input_binary() ? "True" : "False") << std::endl;
                 break;
             case 15:
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else 
+                    std::cout << (binary > input_binary() ? "True" : "False") << std::endl;
                 break;
             case 16:
-                std::cout << (binary > input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    std::cout << (binary <= input_binary() ? "True" : "False") << std::endl;
                 break;
             case 17:
-                std::cout << (binary <= input_binary() ? "True" : "False") << std::endl;
+                if (binary.isEmpty())
+                    std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾!" << std::endl;
+                else
+                    std::cout << (binary >= input_binary() ? "True" : "False") << std::endl;
                 break;
             case 18:
-                std::cout << (binary >= input_binary() ? "True" : "False") << std::endl;
+                exit = true;
                 break;
             default:
-                std::cout << "Íåêîððåêòíûé âûáîð, ïîïðîáóéòå ñíîâà.\n";
+                std::cout << "ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ð¹ Ð²Ñ‹Ð±Ð¾Ñ€, Ð¿Ð¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÑÐ½Ð¾Ð²Ð°.\n";
             }
         }
         catch (std::exception e) {
-            std::cout << "Îøèáêà: " << e.what() << std::endl;
+            std::cout << "ÐžÑˆÐ¸Ð±ÐºÐ°: " << e.what() << std::endl;
         }
     }
 
