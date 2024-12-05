@@ -1,49 +1,81 @@
+//Домбровский А, 9 группа, 2 курс
+// 2 Лаба, 20 номер
+//Создать класс Binary для работы с беззнаковыми целыми двоичными числами,
+//используя для представления числа массив из 100 элементов типа unsigned char,
+//каждый элемент которого является двоичной цифрой.Младшая цифра имеет
+//младший индекс(единицы – в нулевом элементе массива).Реальный размер
+//задается как аргумент конструктора инициализации.Реализовать арифметические
+//операции, аналогичные встроенным для целых в C++, и операции сравнения,
+//приведение к десятичной системе счисления и из нее.
 #include <iostream>;
 #include <Windows.h>;
 #include <fstream>
-import Binary;
+#include <limits>
 
-void printMenu() {
-    std::cout << "\n1. Ввести двоичное число с клавиатуры\n"
-        << "2. Ввести десятичное число с клавиатуры\n"
-        << "3. Ввести двоичное число из файла\n"
-        << "4. Вывести двоичное число на экран\n"
-        << "5. Вывести десятичное число на экран\n"
-        << "6. Сохранить двоичное число в файл\n"
-        << "7. Выполнить операцию +\n"
-        << "8. Выполнить операцию -\n"
-        << "9. Выполнить операцию *\n"
-        << "10. Выполнить операцию /\n"
-        << "11. Выполнить операцию ==\n"
-        << "12. Выполнить операцию <=>\n"
-        << "13. Выполнить операцию !=\n"
-        << "14. Выполнить операцию <\n"
-        << "15. Выполнить операцию >\n"
-        << "16. Выполнить операцию <=\n"
-        << "17. Выполнить операцию >=\n"
+import Binary;
+void print_menu() {
+    std::cout << "\n1. Ввести двоичное число A с клавиатуры\n"
+        << "2. Ввести десятичное число A с клавиатуры\n"
+        << "3. Ввести двоичное число A из файла\n"
+        << "4. Вывести двоичное число A на экран\n"
+        << "5. Вывести десятичное число A на экран\n"
+        << "6. Сохранить двоичное число A в файл\n"
+        << "7. Выполнить операцию  A = A + B\n"
+        << "8. Выполнить операцию A = A - B\n"
+        << "9. Выполнить операцию A = A * B\n"
+        << "10. Выполнить операцию A = A / B\n"
+        << "11. Выполнить операцию A == B\n"
+        << "12. Выполнить операцию A <=> B\n"
+        << "13. Выполнить операцию A != B\n"
+        << "14. Выполнить операцию A < B\n"
+        << "15. Выполнить операцию A > B\n"
+        << "16. Выполнить операцию A <= B\n"
+        << "17. Выполнить операцию A >= B\n"
         << "18. Выход\n"
         << "Выберите действие: ";
 }
+unsigned int input_size() {
+    unsigned int size;
+    while (true) {
+        std::cout << "Введите размер -> ";
+        if (!(std::cin >> size)) {
+            std::cout << "Ошибка: введите целое число." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
+            continue;
+        }
+        break;
+    }
+    return size;
+}
 Binary input_binary() {
-    int size;  
+    unsigned int size = input_size();
     std::string binary_x;
-    std::cout << "Введите размер -> ";
-    std::cin >> size;
+
     std::cout << "Введите двоичное число -> ";
     std::cin >> binary_x;
+    
     Binary binary(size);
-    binary.fromBinaryString(binary_x);
+    binary.from_binary_string(binary_x);
     return binary;
 }
 Binary input_decimal() {
-    int size;
+    unsigned int size = input_size();
     int x;
-    std::cout << "Введите размер -> ";
-    std::cin >> size;
-    std::cout << "Введите десятичное число -> ";
-    std::cin >> x;
+
+    while (true) {
+        std::cout << "Введите десятичное число -> ";
+        if (!(std::cin >> x)) {
+            std::cout << "Ошибка: введите целое число." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
+            continue;
+        }
+        break;
+    }
+
     Binary binary(size);
-    binary.fromDecimal(x);
+    binary.from_decimal(x);
     return binary;
 }
 int main() {
@@ -51,13 +83,13 @@ int main() {
     Binary binary;
     int decimal_x, size;
     std::string binary_x, filename;
-    bool res, exit = false;
+    bool exit = false;
     int choice;
     std::ifstream in_file;
     std::ofstream out_file;
     while (!exit) {
         try {
-            printMenu();
+            print_menu();
             std::cin >> choice;
 
             switch (choice) {
@@ -76,7 +108,7 @@ int main() {
                     in_file >> binary_x;
                     in_file.close();
                     binary = Binary(binary_x.length());
-                    binary.fromBinaryString(binary_x);
+                    binary.from_binary_string(binary_x);
                 }
                 else 
                 {
@@ -84,10 +116,10 @@ int main() {
                 }
                 break;
             case 4:
-                std::cout << "Текущее число (Двоичный вид): " << binary.toBinaryString() << std::endl;
+                std::cout << "Текущее число (Двоичный вид): " << binary.to_binary_string() << std::endl;
                 break;
             case 5:
-                std::cout << "Текущее число (Десятичный вид): " << binary.toDecimal() << std::endl;
+                std::cout << "Текущее число (Десятичный вид): " << binary.to_decimal() << std::endl;
                 break;
             case 6:
                 std::cout << "Введите название файла -> ";
@@ -95,7 +127,7 @@ int main() {
                 out_file.open(filename);
                 if (out_file.is_open()) 
                 {
-                    out_file << binary.toBinaryString() << std::endl;
+                    out_file << binary.to_binary_string() << std::endl;
                     out_file.close();
                 }
                 else 
@@ -104,79 +136,44 @@ int main() {
                 }
                 break;
             case 7:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    binary = binary + input_binary();
+                binary = binary + input_binary();
                 break;
             case 8:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    binary = binary - input_binary();
+                binary = binary - input_binary();
                 break;
             case 9:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    binary = binary * input_binary();
+                binary = binary * input_binary();
                 break;
             case 10:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    binary = binary / input_binary();
+                binary = binary / input_binary();
                 break;
             case 11:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    std::cout << (binary == input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary == input_binary() ? "True" : "False") << std::endl;
                 break;
             case 12:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else 
-                {
-                    std::cout << std::endl;
-                    std::strong_ordering bin = binary <=> input_binary();
-                    if (bin == std::strong_ordering::equal)
-                        std::cout << "=" << std::endl;
-                    else if (bin == std::strong_ordering::greater)
-                        std::cout << ">" << std::endl;
-                    else if (bin == std::strong_ordering::less)
-                        std::cout << "<" << std::endl;
-                }
+                std::cout << std::endl;
+                std::strong_ordering bin = binary <=> input_binary();
+                if (bin == std::strong_ordering::equal)
+                    std::cout << "==" << std::endl;
+                else if (bin == std::strong_ordering::greater)
+                    std::cout << ">" << std::endl;
+                else if (bin == std::strong_ordering::less)
+                    std::cout << "<" << std::endl;
                 break;
             case 13:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    std::cout << (binary != input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary != input_binary() ? "True" : "False") << std::endl;
                 break;
             case 14:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    std::cout << (binary < input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary < input_binary() ? "True" : "False") << std::endl;
                 break;
             case 15:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else 
-                    std::cout << (binary > input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary > input_binary() ? "True" : "False") << std::endl;
                 break;
             case 16:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    std::cout << (binary <= input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary <= input_binary() ? "True" : "False") << std::endl;
                 break;
             case 17:
-                if (binary.isEmpty())
-                    std::cout << "Введите начальное число!" << std::endl;
-                else
-                    std::cout << (binary >= input_binary() ? "True" : "False") << std::endl;
+                std::cout << (binary >= input_binary() ? "True" : "False") << std::endl;
                 break;
             case 18:
                 exit = true;
