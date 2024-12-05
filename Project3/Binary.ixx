@@ -59,13 +59,13 @@ public:
 
     // Проверка на пустоту
     bool is_empty() const;
+    void empty_error() const;
 
 private:
     unsigned char bits[100]; // Хранение битов (0 или 1), младший бит index 0
     unsigned int bitSize;     // Реальный размер (количество используемых бит)
 
     // Вспомогательные методы
-    void empty_error() const;
     void ensure_same_size(const Binary& other) const;
 };
 
@@ -108,6 +108,7 @@ Binary::Binary(unsigned long decimal, unsigned int size) : bitSize(size) {
 
 bool Binary::operator==(const Binary& other) const {
     empty_error();
+    other.empty_error();
     if (bitSize != other.bitSize) return false;
     for (unsigned int i = 0; i < bitSize; ++i) {
         if (bits[i] != other.bits[i]) return false;
@@ -122,6 +123,7 @@ bool Binary::operator!=(const Binary& other) const {
 
 bool Binary::operator<(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     for (int i = bitSize - 1; i >= 0; --i) {
         if (bits[i] < other.bits[i]) return true;
@@ -132,20 +134,24 @@ bool Binary::operator<(const Binary& other) const {
 
 bool Binary::operator<=(const Binary& other) const {
     empty_error();
+    other.empty_error();
     return (*this < other) || (*this == other);
 }
 
 bool Binary::operator>(const Binary& other) const {
     empty_error();
+    other.empty_error();
     return !(*this <= other);
 }
 
 bool Binary::operator>=(const Binary& other) const {
     empty_error();
+    other.empty_error();
     return !(*this < other);
 }
 std::strong_ordering Binary::operator<=>(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     for (int i = static_cast<int>(bitSize) - 1; i >= 0; --i) {
         if (bits[i] < other.bits[i]) {
@@ -161,6 +167,7 @@ std::strong_ordering Binary::operator<=>(const Binary& other) const {
 
 Binary Binary::operator+(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     Binary result(bitSize);
     unsigned char carry = 0;
@@ -177,6 +184,7 @@ Binary Binary::operator+(const Binary& other) const {
 
 Binary Binary::operator-(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     Binary result(bitSize);
     signed char borrow = 0;
@@ -265,24 +273,28 @@ Binary Binary::operator/(const Binary& other) const {
 
 Binary& Binary::operator+=(const Binary& other) {
     empty_error();
+    other.empty_error();
     *this = *this + other;
     return *this;
 }
 
 Binary& Binary::operator-=(const Binary& other) {
     empty_error();
+    other.empty_error();
     *this = *this - other;
     return *this;
 }
 
 Binary& Binary::operator*=(const Binary& other) {
     empty_error();
+    other.empty_error();
     *this = *this * other;
     return *this;
 }
 
 Binary& Binary::operator/=(const Binary& other) {
     empty_error();
+    other.empty_error();
     *this = *this / other;
     return *this;
 }
@@ -355,7 +367,7 @@ void Binary::ensure_same_size(const Binary& other) const {
     }
 }
 
-// Проверка, что размеры двух чисел совпадают
+// Выброс ошибки на пустоту
 void Binary::empty_error() const {
     if (is_empty()) {
         throw std::invalid_argument("Отсутствует число!");
