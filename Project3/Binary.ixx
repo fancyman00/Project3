@@ -58,7 +58,7 @@ public:
     unsigned int size() const;
 
     // Проверка на пустоту
-    bool isEmpty() const;
+    bool is_empty() const;
 
 private:
     unsigned char bits[100]; // Хранение битов (0 или 1), младший бит index 0
@@ -342,7 +342,7 @@ unsigned int Binary::size() const {
 }
 
 // Проверка на пустоту
-bool Binary::isEmpty() const {
+bool Binary::is_empty() const {
     return bitSize == 0;
 }
 
@@ -357,7 +357,7 @@ void Binary::ensure_same_size(const Binary& other) const {
 
 // Проверка, что размеры двух чисел совпадают
 void Binary::empty_error() const {
-    if (isEmpty()) {
+    if (is_empty()) {
         throw std::invalid_argument("Отсутствует число!");
     }
 }
