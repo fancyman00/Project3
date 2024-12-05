@@ -6,34 +6,34 @@ export module Binary;
 
 export class Binary {
 public:
-    // Конструктор по умолчанию (создаёт пустой объект)
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (СЃРѕР·РґР°С‘С‚ РїСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚)
     Binary();
 
-    // Конструктор с заданным размером (количество бит)
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ Р·Р°РґР°РЅРЅС‹Рј СЂР°Р·РјРµСЂРѕРј (РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚)
     explicit Binary(unsigned int size);
 
-    // Конструктор из десятичного числа
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёР· РґРµСЃСЏС‚РёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
     Binary(unsigned long decimal, unsigned int size);
 
-    // Конструктор копирования
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
     Binary(const Binary& other) = default;
 
-    // Оператор присваивания
+    // РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
     Binary& operator=(const Binary& other) = default;
 
-    // Арифметические операции
+    // РђСЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё
     Binary operator+(const Binary& other) const;
     Binary operator-(const Binary& other) const;
     Binary operator*(const Binary& other) const;
-    Binary operator/(const Binary& other) const;    // Перегрузка оператора деления
+    Binary operator/(const Binary& other) const;    // РџРµСЂРµРіСЂСѓР·РєР° РѕРїРµСЂР°С‚РѕСЂР° РґРµР»РµРЅРёСЏ
 
-    // Операторы присваивания с арифметическими операциями
+    // РћРїРµСЂР°С‚РѕСЂС‹ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ СЃ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРјРё РѕРїРµСЂР°С†РёСЏРјРё
     Binary& operator+=(const Binary& other);
     Binary& operator-=(const Binary& other);
     Binary& operator*=(const Binary& other);
-    Binary& operator/=(const Binary& other);         // Перегрузка оператора деления с присваиванием
+    Binary& operator/=(const Binary& other);         // РџРµСЂРµРіСЂСѓР·РєР° РѕРїРµСЂР°С‚РѕСЂР° РґРµР»РµРЅРёСЏ СЃ РїСЂРёСЃРІР°РёРІР°РЅРёРµРј
 
-    // Операторы сравнения
+    // РћРїРµСЂР°С‚РѕСЂС‹ СЃСЂР°РІРЅРµРЅРёСЏ
     bool operator==(const Binary& other) const;
     bool operator!=(const Binary& other) const;
     bool operator<(const Binary& other) const;
@@ -42,60 +42,61 @@ public:
     bool operator>=(const Binary& other) const;
     std::strong_ordering operator<=>(const Binary& other) const;
 
-    // Преобразование в десятичную систему
-    unsigned long toDecimal() const;
+    // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІ РґРµСЃСЏС‚РёС‡РЅСѓСЋ СЃРёСЃС‚РµРјСѓ
+    unsigned long to_decimal() const;
 
-    // Преобразование из строки двоичного числа
-    void fromBinaryString(const std::string& binaryStr);
+    // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёР· СЃС‚СЂРѕРєРё РґРІРѕРёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+    void from_binary_string(const std::string& binaryStr);
 
-    // Преобразование из десятичного числа
-    void fromDecimal(unsigned long decimal);
+    // РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёР· РґРµСЃСЏС‚РёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+    void from_decimal(unsigned long decimal);
 
-    // Получение строки представления двоичного числа
-    std::string toBinaryString() const;
+    // РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ РґРІРѕРёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+    std::string to_binary_string() const;
 
-    // Получение размера (количество бит)
+    // РџРѕР»СѓС‡РµРЅРёРµ СЂР°Р·РјРµСЂР° (РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚)
     unsigned int size() const;
 
-    // Проверка на пустоту
+    // РџСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
     bool isEmpty() const;
 
 private:
-    unsigned char bits[100]; // Хранение битов (0 или 1), младший бит index 0
-    unsigned int bitSize;     // Реальный размер (количество используемых бит)
+    unsigned char bits[100]; // РҐСЂР°РЅРµРЅРёРµ Р±РёС‚РѕРІ (0 РёР»Рё 1), РјР»Р°РґС€РёР№ Р±РёС‚ index 0
+    unsigned int bitSize;     // Р РµР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ (РєРѕР»РёС‡РµСЃС‚РІРѕ РёСЃРїРѕР»СЊР·СѓРµРјС‹С… Р±РёС‚)
 
-    // Вспомогательные методы
-    void ensureSameSize(const Binary& other) const;
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ РјРµС‚РѕРґС‹
+    void empty_error() const;
+    void ensure_same_size(const Binary& other) const;
 };
 
-// Реализация методов класса Binary
+// Р РµР°Р»РёР·Р°С†РёСЏ РјРµС‚РѕРґРѕРІ РєР»Р°СЃСЃР° Binary
 
-// Конструктор по умолчанию (создаёт пустой объект)
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (СЃРѕР·РґР°С‘С‚ РїСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚)
 Binary::Binary() : bitSize(0) {
-    // Инициализируем все биты нулями, хотя bitSize = 0 говорит о пустоте
+    // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РІСЃРµ Р±РёС‚С‹ РЅСѓР»СЏРјРё, С…РѕС‚СЏ bitSize = 0 РіРѕРІРѕСЂРёС‚ Рѕ РїСѓСЃС‚РѕС‚Рµ
     for (unsigned int i = 0; i < 100; ++i) {
         bits[i] = 0;
     }
 }
 
-// Конструктор с заданным размером (количество бит)
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ Р·Р°РґР°РЅРЅС‹Рј СЂР°Р·РјРµСЂРѕРј (РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚)
 Binary::Binary(unsigned int size) : bitSize(size) {
     if (size == 0 || size > 100) {
-        throw std::invalid_argument("Размер должен быть от 1 до 100 бит.");
+        throw std::invalid_argument("Р Р°Р·РјРµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ 100 Р±РёС‚.");
     }
     for (unsigned int i = 0; i < bitSize; ++i) {
-        bits[i] = 0; // Инициализируем все биты нулями
+        bits[i] = 0; // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РІСЃРµ Р±РёС‚С‹ РЅСѓР»СЏРјРё
     }
 }
 
-// Конструктор из десятичного числа
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёР· РґРµСЃСЏС‚РёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
 Binary::Binary(unsigned long decimal, unsigned int size) : bitSize(size) {
     if (size == 0 || size > 100) {
-        throw std::invalid_argument("Размер должен быть от 1 до 100 бит.");
+        throw std::invalid_argument("Р Р°Р·РјРµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ 100 Р±РёС‚.");
     }
-    // Проверка переполнения: убедимся, что decimal помещается в bitSize бит
+    // РџСЂРѕРІРµСЂРєР° РїРµСЂРµРїРѕР»РЅРµРЅРёСЏ: СѓР±РµРґРёРјСЃСЏ, С‡С‚Рѕ decimal РїРѕРјРµС‰Р°РµС‚СЃСЏ РІ bitSize Р±РёС‚
     if ((size < sizeof(unsigned long) * 8) && (decimal >= (1UL << size))) {
-        throw std::overflow_error("Число превышает допустимый размер.");
+        throw std::overflow_error("Р§РёСЃР»Рѕ РїСЂРµРІС‹С€Р°РµС‚ РґРѕРїСѓСЃС‚РёРјС‹Р№ СЂР°Р·РјРµСЂ.");
     }
     for (unsigned int i = 0; i < bitSize; ++i) {
         bits[i] = decimal % 2;
@@ -103,9 +104,10 @@ Binary::Binary(unsigned long decimal, unsigned int size) : bitSize(size) {
     }
 }
 
-// Операторы сравнения
+// РћРїРµСЂР°С‚РѕСЂС‹ СЃСЂР°РІРЅРµРЅРёСЏ
 
 bool Binary::operator==(const Binary& other) const {
+    empty_error();
     if (bitSize != other.bitSize) return false;
     for (unsigned int i = 0; i < bitSize; ++i) {
         if (bits[i] != other.bits[i]) return false;
@@ -114,11 +116,13 @@ bool Binary::operator==(const Binary& other) const {
 }
 
 bool Binary::operator!=(const Binary& other) const {
+    empty_error();
     return !(*this == other);
 }
 
 bool Binary::operator<(const Binary& other) const {
-    ensureSameSize(other);
+    empty_error();
+    ensure_same_size(other);
     for (int i = bitSize - 1; i >= 0; --i) {
         if (bits[i] < other.bits[i]) return true;
         if (bits[i] > other.bits[i]) return false;
@@ -127,18 +131,22 @@ bool Binary::operator<(const Binary& other) const {
 }
 
 bool Binary::operator<=(const Binary& other) const {
+    empty_error();
     return (*this < other) || (*this == other);
 }
 
 bool Binary::operator>(const Binary& other) const {
+    empty_error();
     return !(*this <= other);
 }
 
 bool Binary::operator>=(const Binary& other) const {
+    empty_error();
     return !(*this < other);
 }
 std::strong_ordering Binary::operator<=>(const Binary& other) const {
-    ensureSameSize(other);
+    empty_error();
+    ensure_same_size(other);
     for (int i = static_cast<int>(bitSize) - 1; i >= 0; --i) {
         if (bits[i] < other.bits[i]) {
             return std::strong_ordering::less;
@@ -149,10 +157,11 @@ std::strong_ordering Binary::operator<=>(const Binary& other) const {
     }
     return std::strong_ordering::equal;
 }
-// Арифметические операции
+// РђСЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё
 
 Binary Binary::operator+(const Binary& other) const {
-    ensureSameSize(other);
+    empty_error();
+    ensure_same_size(other);
     Binary result(bitSize);
     unsigned char carry = 0;
     for (unsigned int i = 0; i < bitSize; ++i) {
@@ -161,13 +170,14 @@ Binary Binary::operator+(const Binary& other) const {
         carry = sum / 2;
     }
     if (carry) {
-        throw std::overflow_error("Переполнение при сложении.");
+        throw std::overflow_error("РџРµСЂРµРїРѕР»РЅРµРЅРёРµ РїСЂРё СЃР»РѕР¶РµРЅРёРё.");
     }
     return result;
 }
 
 Binary Binary::operator-(const Binary& other) const {
-    ensureSameSize(other);
+    empty_error();
+    ensure_same_size(other);
     Binary result(bitSize);
     signed char borrow = 0;
     for (unsigned int i = 0; i < bitSize; ++i) {
@@ -181,25 +191,26 @@ Binary Binary::operator-(const Binary& other) const {
         }
     }
     if (borrow) {
-        throw std::underflow_error("Переполнение при вычитании.");
+        throw std::underflow_error("РџРµСЂРµРїРѕР»РЅРµРЅРёРµ РїСЂРё РІС‹С‡РёС‚Р°РЅРёРё.");
     }
     return result;
 }
 
 Binary Binary::operator*(const Binary& other) const {
-    ensureSameSize(other);
+    empty_error();
+    ensure_same_size(other);
     Binary result(bitSize);
     for (unsigned int i = 0; i < bitSize; ++i) {
         if (other.bits[i]) {
             unsigned char carry = 0;
             for (unsigned int j = 0; j < bitSize - i; ++j) {
                 unsigned int index = i + j;
-                if (index >= bitSize) break; // Игнорировать переполнение
+                if (index >= bitSize) break; // РРіРЅРѕСЂРёСЂРѕРІР°С‚СЊ РїРµСЂРµРїРѕР»РЅРµРЅРёРµ
                 unsigned char temp = result.bits[index] + bits[j] + carry;
                 result.bits[index] = temp % 2;
                 carry = temp / 2;
                 if (j == bitSize - i - 1 && carry) {
-                    throw std::overflow_error("Переполнение при умножении.");
+                    throw std::overflow_error("РџРµСЂРµРїРѕР»РЅРµРЅРёРµ РїСЂРё СѓРјРЅРѕР¶РµРЅРёРё.");
                 }
             }
         }
@@ -208,8 +219,9 @@ Binary Binary::operator*(const Binary& other) const {
 }
 
 Binary Binary::operator/(const Binary& other) const {
-    ensureSameSize(other);
-    // Проверка деления на ноль
+    empty_error();
+    ensure_same_size(other);
+    // РџСЂРѕРІРµСЂРєР° РґРµР»РµРЅРёСЏ РЅР° РЅРѕР»СЊ
     bool isZero = true;
     for (unsigned int i = 0; i < other.bitSize; ++i) {
         if (other.bits[i] != 0) {
@@ -218,29 +230,29 @@ Binary Binary::operator/(const Binary& other) const {
         }
     }
     if (isZero) {
-        throw std::invalid_argument("Деление на ноль.");
+        throw std::invalid_argument("Р”РµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ.");
     }
 
-    // Инициализация делимого и делителя
-    Binary dividend(*this); // Копия делимого
-    Binary divisor(other);   // Делитель
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РґРµР»РёРјРѕРіРѕ Рё РґРµР»РёС‚РµР»СЏ
+    Binary dividend(*this); // РљРѕРїРёСЏ РґРµР»РёРјРѕРіРѕ
+    Binary divisor(other);   // Р”РµР»РёС‚РµР»СЊ
 
-    // Инициализация результата (частное)
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЂРµР·СѓР»СЊС‚Р°С‚Р° (С‡Р°СЃС‚РЅРѕРµ)
     Binary quotient(bitSize);
 
-    // Рабочий объект для остатка
+    // Р Р°Р±РѕС‡РёР№ РѕР±СЉРµРєС‚ РґР»СЏ РѕСЃС‚Р°С‚РєР°
     Binary remainder(bitSize);
 
-    // Деление бит за битом от старшего к младшему
+    // Р”РµР»РµРЅРёРµ Р±РёС‚ Р·Р° Р±РёС‚РѕРј РѕС‚ СЃС‚Р°СЂС€РµРіРѕ Рє РјР»Р°РґС€РµРјСѓ
     for (int i = bitSize - 1; i >= 0; --i) {
-        // Сдвигаем остаток влево на 1 бит и добавляем текущий бит делимого
-        // Для сдвига умножаем на 2
+        // РЎРґРІРёРіР°РµРј РѕСЃС‚Р°С‚РѕРє РІР»РµРІРѕ РЅР° 1 Р±РёС‚ Рё РґРѕР±Р°РІР»СЏРµРј С‚РµРєСѓС‰РёР№ Р±РёС‚ РґРµР»РёРјРѕРіРѕ
+        // Р”Р»СЏ СЃРґРІРёРіР° СѓРјРЅРѕР¶Р°РµРј РЅР° 2
         for (unsigned int j = bitSize - 1; j > 0; --j) {
             remainder.bits[j] = remainder.bits[j - 1];
         }
         remainder.bits[0] = dividend.bits[i];
 
-        // Проверяем, можно ли вычесть делитель из остатка
+        // РџСЂРѕРІРµСЂСЏРµРј, РјРѕР¶РЅРѕ Р»Рё РІС‹С‡РµСЃС‚СЊ РґРµР»РёС‚РµР»СЊ РёР· РѕСЃС‚Р°С‚РєР°
         if (!(remainder < divisor)) {
             remainder = remainder - divisor;
             quotient.bits[i] = 1;
@@ -249,30 +261,34 @@ Binary Binary::operator/(const Binary& other) const {
     return quotient;
 }
 
-// Операторы присваивания с арифметическими операциями
+// РћРїРµСЂР°С‚РѕСЂС‹ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ СЃ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРјРё РѕРїРµСЂР°С†РёСЏРјРё
 
 Binary& Binary::operator+=(const Binary& other) {
+    empty_error();
     *this = *this + other;
     return *this;
 }
 
 Binary& Binary::operator-=(const Binary& other) {
+    empty_error();
     *this = *this - other;
     return *this;
 }
 
 Binary& Binary::operator*=(const Binary& other) {
+    empty_error();
     *this = *this * other;
     return *this;
 }
 
 Binary& Binary::operator/=(const Binary& other) {
+    empty_error();
     *this = *this / other;
     return *this;
 }
 
-// Преобразование в десятичную систему
-unsigned long Binary::toDecimal() const {
+// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІ РґРµСЃСЏС‚РёС‡РЅСѓСЋ СЃРёСЃС‚РµРјСѓ
+unsigned long Binary::to_decimal() const {
     unsigned long decimal = 0;
     unsigned long base = 1;
     for (unsigned int i = 0; i < bitSize; ++i) {
@@ -282,10 +298,10 @@ unsigned long Binary::toDecimal() const {
     return decimal;
 }
 
-// Преобразование из строки двоичного числа
-void Binary::fromBinaryString(const std::string& binaryStr) {
+// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёР· СЃС‚СЂРѕРєРё РґРІРѕРёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+void Binary::from_binary_string(const std::string& binaryStr) {
     if (binaryStr.length() != bitSize) {
-        throw std::invalid_argument("Длина строки не соответствует размеру Binary.");
+        throw std::invalid_argument("Р”Р»РёРЅР° СЃС‚СЂРѕРєРё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СЂР°Р·РјРµСЂСѓ Binary.");
     }
     for (unsigned int i = 0; i < bitSize; ++i) {
         char c = binaryStr[bitSize - 1 - i];
@@ -294,15 +310,15 @@ void Binary::fromBinaryString(const std::string& binaryStr) {
         } else if (c == '1') {
             bits[i] = 1;
         } else {
-            throw std::invalid_argument("Строка должна содержать только '0' или '1'.");
+            throw std::invalid_argument("РЎС‚СЂРѕРєР° РґРѕР»Р¶РЅР° СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ '0' РёР»Рё '1'.");
         }
     }
 }
 
-// Преобразование из десятичного числа
-void Binary::fromDecimal(unsigned long decimal) {
+// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РёР· РґРµСЃСЏС‚РёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+void Binary::from_decimal(unsigned long decimal) {
     if ((bitSize < sizeof(unsigned long) * 8) && (decimal >= (1UL << bitSize))) {
-        throw std::overflow_error("Число превышает допустимый размер.");
+        throw std::overflow_error("Р§РёСЃР»Рѕ РїСЂРµРІС‹С€Р°РµС‚ РґРѕРїСѓСЃС‚РёРјС‹Р№ СЂР°Р·РјРµСЂ.");
     }
     for (unsigned int i = 0; i < bitSize; ++i) {
         bits[i] = decimal % 2;
@@ -310,8 +326,8 @@ void Binary::fromDecimal(unsigned long decimal) {
     }
 }
 
-// Получение строки представления двоичного числа
-std::string Binary::toBinaryString() const {
+// РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ РґРІРѕРёС‡РЅРѕРіРѕ С‡РёСЃР»Р°
+std::string Binary::to_binary_string() const {
     std::string str;
     str.reserve(bitSize);
     for (int i = bitSize - 1; i >= 0; --i) {
@@ -320,21 +336,28 @@ std::string Binary::toBinaryString() const {
     return str;
 }
 
-// Получение размера (количество бит)
+// РџРѕР»СѓС‡РµРЅРёРµ СЂР°Р·РјРµСЂР° (РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚)
 unsigned int Binary::size() const {
     return bitSize;
 }
 
-// Проверка на пустоту
+// РџСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ
 bool Binary::isEmpty() const {
     return bitSize == 0;
 }
 
-// Вспомогательные методы
+// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ РјРµС‚РѕРґС‹
 
-// Проверка, что размеры двух чисел совпадают
-void Binary::ensureSameSize(const Binary& other) const {
+// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ СЂР°Р·РјРµСЂС‹ РґРІСѓС… С‡РёСЃРµР» СЃРѕРІРїР°РґР°СЋС‚
+void Binary::ensure_same_size(const Binary& other) const {
     if (bitSize != other.bitSize) {
-        throw std::invalid_argument("Размеры чисел должны совпадать.");
+        throw std::invalid_argument("Р Р°Р·РјРµСЂС‹ С‡РёСЃРµР» РґРѕР»Р¶РЅС‹ СЃРѕРІРїР°РґР°С‚СЊ.");
+    }
+}
+
+// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ СЂР°Р·РјРµСЂС‹ РґРІСѓС… С‡РёСЃРµР» СЃРѕРІРїР°РґР°СЋС‚
+void Binary::empty_error() const {
+    if (isEmpty()) {
+        throw std::invalid_argument("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ С‡РёСЃР»Рѕ!");
     }
 }
