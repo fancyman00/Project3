@@ -206,6 +206,7 @@ Binary Binary::operator-(const Binary& other) const {
 
 Binary Binary::operator*(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     Binary result(bitSize);
     for (unsigned int i = 0; i < bitSize; ++i) {
@@ -228,6 +229,7 @@ Binary Binary::operator*(const Binary& other) const {
 
 Binary Binary::operator/(const Binary& other) const {
     empty_error();
+    other.empty_error();
     ensure_same_size(other);
     // Проверка деления на ноль
     bool isZero = true;
@@ -370,6 +372,6 @@ void Binary::ensure_same_size(const Binary& other) const {
 // Выброс ошибки на пустоту
 void Binary::empty_error() const {
     if (is_empty()) {
-        throw std::invalid_argument("Отсутствует число!");
+        throw std::invalid_argument("Отсутствует значение Binary!");
     }
 }
