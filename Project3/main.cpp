@@ -69,18 +69,14 @@ static Binary input_binary() {
     std::cout << "Введите двоичное число -> ";
     std::cin >> binary_x;
     
-    Binary binary(size);
-    binary.from_binary_string(binary_x);
-    return binary;
+    return Binary(binary_x);
 }
 
 static Binary input_decimal() {
     unsigned int size = input_uint("Введите размер -> ");
     int x = input_uint("Введите беззнаковое десятичное число -> ");
 
-    Binary binary(size);
-    binary.from_decimal(x);
-    return binary;
+    return Binary(x, size);
 }
 
 int main() {
