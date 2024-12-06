@@ -15,6 +15,9 @@ public:
     // Конструктор из десятичного числа
     Binary(unsigned long decimal, unsigned int size);
 
+    // Конструктор из двоичного числа
+    Binary(const std::string binary_str);
+
     // Конструктор копирования
     Binary(const Binary& other) = default;
 
@@ -101,6 +104,23 @@ Binary::Binary(unsigned long decimal, unsigned int size) : bitSize(size) {
     for (unsigned int i = 0; i < bitSize; ++i) {
         bits[i] = decimal % 2;
         decimal /= 2;
+    }
+}
+
+// Конструктор из двоичного числа
+Binary::Binary(const std::string binary_str) : bitSize(binary_str.length())
+{
+    for (unsigned int i = 0; i < bitSize; ++i) {
+        char c = binary_str[bitSize - 1 - i];
+        if (c == '0') {
+            bits[i] = 0;
+        }
+        else if (c == '1') {
+            bits[i] = 1;
+        }
+        else {
+            throw std::invalid_argument("Строка должна содержать только '0' или '1'.");
+        }
     }
 }
 
