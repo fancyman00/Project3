@@ -13,7 +13,7 @@
 #include <limits>
 import Binary;
 
-void print_menu() {
+static void print_menu() {
     std::cout << "\nМеню\n\n"
         << "1. Ввести двоичное число с клавиатуры\n"
         << "2. Ввести десятичное число с клавиатуры\n\n"
@@ -33,17 +33,17 @@ void print_menu() {
         << "16. Выполнить операцию A >= B\n\n"
         << "17. Выход\n\n";
 }
-void print_sub_menu() {
+static void print_sub_menu() {
     std::cout << "\nВыберите переменную\n"
         << "1. A\n"
         << "2. B\n";
 }
-unsigned int input_uint(const char* message) {
+static unsigned int input_uint(const char* message) {
     unsigned int size;
     while (true) {
         std::cout << message;
         if (!(std::cin >> size)) {
-            std::cout << "Ошибка: введите целое число." << std::endl;
+            std::cout << "Ошибка: введите беззнаковое целое число." << std::endl;
             std::cin.clear();
             std::cin.ignore(INT_MAX, '\n');
             continue;
@@ -53,7 +53,7 @@ unsigned int input_uint(const char* message) {
     return size;
 }
 
-unsigned int input_variable() {
+static unsigned int input_variable() {
     unsigned short choice = 0;
     print_sub_menu();
     while (choice != 1 && choice != 2) {
@@ -62,7 +62,7 @@ unsigned int input_variable() {
     return choice;
 }
 
-Binary input_binary() {
+static Binary input_binary() {
     unsigned int size = input_uint("Введите размер -> ");
     std::string binary_x;
 
@@ -74,20 +74,9 @@ Binary input_binary() {
     return binary;
 }
 
-Binary input_decimal() {
+static Binary input_decimal() {
     unsigned int size = input_uint("Введите размер -> ");
-    int x;
-
-    while (true) {
-        std::cout << "Введите десятичное число -> ";
-        if (!(std::cin >> x)) {
-            std::cout << "Ошибка: введите целое число." << std::endl;
-            std::cin.clear();
-            std::cin.ignore(INT_MAX, '\n');
-            continue;
-        }
-        break;
-    }
+    int x = input_uint("Введите беззнаковое десятичное число -> ");
 
     Binary binary(size);
     binary.from_decimal(x);
@@ -123,10 +112,10 @@ int main() {
             case 2:
                 switch (input_variable()) {
                 case 1:
-                    binary_a = input_binary();
+                    binary_a = input_decimal();
                     break;
                 case 2:
-                    binary_b = input_binary();
+                    binary_b = input_decimal();
                     break;
                 }
                 break;
@@ -209,11 +198,11 @@ int main() {
                 std::strong_ordering bin = binary_a <=> binary_b;
                 std::cout << "Результат операции: ";
                 if (bin == std::strong_ordering::equal)
-                    std::cout << "==" << std::endl;
+                    std::cout << "A == B" << std::endl;
                 else if (bin == std::strong_ordering::greater)
-                    std::cout << ">" << std::endl;
+                    std::cout << "A > B" << std::endl;
                 else if (bin == std::strong_ordering::less)
-                    std::cout << "<" << std::endl;
+                    std::cout << "A < B" << std::endl;
                 break;
             case 12:
                 std::cout << (binary_a != binary_b ? "True" : "False") << std::endl;
