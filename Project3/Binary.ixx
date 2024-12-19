@@ -3,115 +3,63 @@ export module Binary;
 #include <string>
 #include <stdexcept>
 #include <algorithm>
+#include <compare>
 
 export class Binary {
 public:
-    // Конструктор по умолчанию (создаёт пустой объект)
     Binary();
-
-    // Конструктор с заданным размером (количество бит)
-    explicit Binary(unsigned int size);
-
-    // Конструктор из десятичного числа
-    Binary(unsigned long decimal, unsigned int size);
-
-    // Конструктор из двоичного числа
+    Binary(unsigned long long decimal);
     Binary(const std::string binary_str);
-
-    // Конструктор копирования
     Binary(const Binary& other) = default;
-
-    // Оператор присваивания
     Binary& operator=(const Binary& other) = default;
 
-    // Арифметические операции
     Binary operator+(const Binary& other) const;
     Binary operator-(const Binary& other) const;
     Binary operator*(const Binary& other) const;
-    Binary operator/(const Binary& other) const;    // Перегрузка оператора деления
+    Binary operator^(unsigned int exponent) const;
+    Binary operator/(const Binary& other) const;
 
-    // Операторы присваивания с арифметическими операциями
     Binary& operator+=(const Binary& other);
     Binary& operator-=(const Binary& other);
     Binary& operator*=(const Binary& other);
-    Binary& operator/=(const Binary& other);         // Перегрузка оператора деления с присваиванием
+    Binary& operator/=(const Binary& other);
 
-    // Операторы сравнения
     bool operator==(const Binary& other) const;
     bool operator!=(const Binary& other) const;
-    bool operator<(const Binary& other) const;
-    bool operator<=(const Binary& other) const;
-    bool operator>(const Binary& other) const;
-    bool operator>=(const Binary& other) const;
     std::strong_ordering operator<=>(const Binary& other) const;
 
-    // Преобразование в десятичную систему
-    unsigned long to_decimal() const;
-
-    // Преобразование из строки двоичного числа
-    void from_binary_string(const std::string& binaryStr);
-
-    // Преобразование из десятичного числа
-    void from_decimal(unsigned long decimal);
-
-    // Получение строки представления двоичного числа
+    unsigned long long to_decimal() const;
     std::string to_binary_string() const;
-
-    // Получение размера (количество бит)
     unsigned int size() const;
-
-    // Проверка на пустоту
     bool is_empty() const;
     void empty_error() const;
 
 private:
-    unsigned char bits[100]; // Хранение битов (0 или 1), младший бит index 0
-    unsigned int bitSize;     // Реальный размер (количество используемых бит)
+    unsigned char bits[100] = { 0 };
+    unsigned int bit_size = 0;
 
-    // Вспомогательные методы
-    void ensure_same_size(const Binary& other) const;
+    static unsigned int significant_bits(unsigned long long value);
+    void update_size();
+    void shift_left();
 };
 
-// Реализация методов класса Binary
+Binary::Binary() {}
 
-// Конструктор по умолчанию (создаёт пустой объект)
-Binary::Binary() : bitSize(0) {
-    // Инициализируем все биты нулями, хотя bitSize = 0 говорит о пустоте
-    for (unsigned int i = 0; i < 100; ++i) {
-        bits[i] = 0;
-    }
-}
-
-// Конструктор с заданным размером (количество бит)
-Binary::Binary(unsigned int size) : bitSize(size) {
-    if (size == 0 || size > 100) {
-        throw std::invalid_argument("Размер должен быть от 1 до 100 бит.");
-    }
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        bits[i] = 0; // Инициализируем все биты нулями
-    }
-}
-
-// Конструктор из десятичного числа
-Binary::Binary(unsigned long decimal, unsigned int size) : bitSize(size) {
-    if (size == 0 || size > 100) {
-        throw std::invalid_argument("Размер должен быть от 1 до 100 бит.");
-    }
-    // Проверка переполнения: убедимся, что decimal помещается в bitSize бит
-    if ((size < sizeof(unsigned long) * 8) && (decimal >= (1UL << size))) {
-        throw std::overflow_error("Число превышает допустимый размер.");
-    }
-    for (unsigned int i = 0; i < bitSize; ++i) {
+Binary::Binary(unsigned long long decimal) {
+    bit_size = significant_bits(decimal);
+    for (unsigned int i = 0; i < bit_size; ++i) {
         bits[i] = decimal % 2;
         decimal /= 2;
     }
 }
 
-// Конструктор из двоичного числа
-Binary::Binary(const std::string binary_str) : bitSize(binary_str.length())
-{
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        char c = binary_str[bitSize - 1 - i];
+Binary::Binary(const std::string binary_str) {
+    bit_size = binary_str.length();
+    if (binary_str.empty() || bit_size > 100) {
+        throw std::invalid_argument("Размер должен быть от 1 до 100 бит.");
+    }
+    for (unsigned int i = 0; i < bit_size; ++i) {
+        char c = binary_str[bit_size - 1 - i];
         if (c == '0') {
             bits[i] = 0;
         }
@@ -124,274 +72,219 @@ Binary::Binary(const std::string binary_str) : bitSize(binary_str.length())
     }
 }
 
-// Операторы сравнения
-
 bool Binary::operator==(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    if (bitSize != other.bitSize) return false;
-    for (unsigned int i = 0; i < bitSize; ++i) {
+    if (bit_size != other.bit_size) return false;
+    for (unsigned int i = 0; i < bit_size; ++i) {
         if (bits[i] != other.bits[i]) return false;
     }
     return true;
 }
 
 bool Binary::operator!=(const Binary& other) const {
-    empty_error();
     return !(*this == other);
 }
 
-bool Binary::operator<(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    for (int i = bitSize - 1; i >= 0; --i) {
-        if (bits[i] < other.bits[i]) return true;
-        if (bits[i] > other.bits[i]) return false;
-    }
-    return false;
-}
-
-bool Binary::operator<=(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    return (*this < other) || (*this == other);
-}
-
-bool Binary::operator>(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    return !(*this <= other);
-}
-
-bool Binary::operator>=(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    return !(*this < other);
-}
 std::strong_ordering Binary::operator<=>(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    for (int i = static_cast<int>(bitSize) - 1; i >= 0; --i) {
-        if (bits[i] < other.bits[i]) {
-            return std::strong_ordering::less;
-        }
-        if (bits[i] > other.bits[i]) {
-            return std::strong_ordering::greater;
+    if (bit_size != other.bit_size) {
+        return bit_size <=> other.bit_size;
+    }
+    for (int i = static_cast<int>(bit_size) - 1; i >= 0; --i) {
+        if (bits[i] != other.bits[i]) {
+            return bits[i] <=> other.bits[i];
         }
     }
     return std::strong_ordering::equal;
 }
-// Арифметические операции
 
 Binary Binary::operator+(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    Binary result(bitSize);
+    unsigned int max_size = std::max(bit_size, other.bit_size);
+    Binary result;
+    result.bit_size = max_size;
+
     unsigned char carry = 0;
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        unsigned char sum = bits[i] + other.bits[i] + carry;
+    for (unsigned int i = 0; i < max_size; ++i) {
+        unsigned char bit1 = (i < bit_size) ? bits[i] : 0;
+        unsigned char bit2 = (i < other.bit_size) ? other.bits[i] : 0;
+
+        unsigned char sum = bit1 + bit2 + carry;
         result.bits[i] = sum % 2;
         carry = sum / 2;
     }
     if (carry) {
-        throw std::overflow_error("Переполнение при сложении.");
+        if (max_size >= 100) {
+            throw std::overflow_error("Результат сложения превышает 100 бит.");
+        }
+        result.bits[max_size] = carry;
+        result.bit_size++;
     }
     return result;
 }
 
 Binary Binary::operator-(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    Binary result(bitSize);
+    if (*this < other) {
+        throw std::underflow_error("Результат вычитания отрицательный.");
+    }
+    Binary result;
     signed char borrow = 0;
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        signed char diff = bits[i] - other.bits[i] - borrow;
+    for (unsigned int i = 0; i < bit_size; ++i) {
+        signed char bit1 = bits[i];
+        signed char bit2 = (i < other.bit_size) ? other.bits[i] : 0;
+
+        signed char diff = bit1 - bit2 - borrow;
         if (diff < 0) {
             result.bits[i] = diff + 2;
             borrow = 1;
-        } else {
+        }
+        else {
             result.bits[i] = diff;
             borrow = 0;
         }
     }
-    if (borrow) {
-        throw std::underflow_error("Переполнение при вычитании.");
-    }
+    result.update_size();
     return result;
 }
 
 Binary Binary::operator*(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    Binary result(bitSize);
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        if (other.bits[i]) {
+    if (bit_size == 0 || other.bit_size == 0) {
+        return Binary(0);
+    }
+    Binary result;
+    for (unsigned int i = 0; i < other.bit_size; ++i) {
+        if (other.bits[i] == 1) {
+            Binary temp;
             unsigned char carry = 0;
-            for (unsigned int j = 0; j < bitSize - i; ++j) {
+            for (unsigned int j = 0; j < bit_size; ++j) {
                 unsigned int index = i + j;
-                if (index >= bitSize) break; // Игнорировать переполнение
-                unsigned char temp = result.bits[index] + bits[j] + carry;
-                result.bits[index] = temp % 2;
-                carry = temp / 2;
-                if (j == bitSize - i - 1 && carry) {
-                    throw std::overflow_error("Переполнение при умножении.");
+                if (index >= 100) {
+                    throw std::overflow_error("Результат умножения превышает 100 бит.");
                 }
+                unsigned char sum = result.bits[index] + bits[j] + carry;
+                result.bits[index] = sum % 2;
+                carry = sum / 2;
+            }
+            if (carry) {
+                if (i + bit_size >= 100) {
+                    throw std::overflow_error("Результат умножения превышает 100 бит.");
+                }
+                result.bits[i + bit_size] = carry;
             }
         }
+    }
+    result.update_size();
+    return result;
+}
+
+Binary Binary::operator^(unsigned int exponent) const {
+    if (exponent == 0) {
+        return Binary(1);
+    }
+    Binary result(1);
+    Binary base = *this;
+    for (unsigned int i = 0; i < exponent; ++i) {
+        result = result * base;
     }
     return result;
 }
 
 Binary Binary::operator/(const Binary& other) const {
-    empty_error();
-    other.empty_error();
-    ensure_same_size(other);
-    // Проверка деления на ноль
-    bool isZero = true;
-    for (unsigned int i = 0; i < other.bitSize; ++i) {
-        if (other.bits[i] != 0) {
-            isZero = false;
-            break;
-        }
-    }
-    if (isZero) {
+    if (other.is_empty()) {
         throw std::invalid_argument("Деление на ноль.");
     }
+    Binary quotient;
+    Binary remainder;
 
-    // Инициализация делимого и делителя
-    Binary dividend(*this); // Копия делимого
-    Binary divisor(other);   // Делитель
+    // Итерация от старшего бита к младшему
+    for (int i = bit_size - 1; i >= 0; --i) {
+        remainder.shift_left();                // Сдвигаем остаток влево
+        remainder.bits[0] = bits[i];          // Добавляем текущий бит
+        remainder.update_size();
 
-    // Инициализация результата (частное)
-    Binary quotient(bitSize);
-
-    // Рабочий объект для остатка
-    Binary remainder(bitSize);
-
-    // Деление бит за битом от старшего к младшему
-    for (int i = bitSize - 1; i >= 0; --i) {
-        // Сдвигаем остаток влево на 1 бит и добавляем текущий бит делимого
-        // Для сдвига умножаем на 2
-        for (unsigned int j = bitSize - 1; j > 0; --j) {
-            remainder.bits[j] = remainder.bits[j - 1];
-        }
-        remainder.bits[0] = dividend.bits[i];
-
-        // Проверяем, можно ли вычесть делитель из остатка
-        if (!(remainder < divisor)) {
-            remainder = remainder - divisor;
-            quotient.bits[i] = 1;
+        if (remainder >= other) {
+            remainder = remainder - other;    // Вычитаем делитель из остатка
+            quotient.bits[i] = 1;             // Устанавливаем бит в частном
         }
     }
+
+    quotient.update_size();                   // Обновляем размер частного
     return quotient;
 }
 
-// Операторы присваивания с арифметическими операциями
+
+
 
 Binary& Binary::operator+=(const Binary& other) {
-    empty_error();
-    other.empty_error();
     *this = *this + other;
     return *this;
 }
 
 Binary& Binary::operator-=(const Binary& other) {
-    empty_error();
-    other.empty_error();
     *this = *this - other;
     return *this;
 }
 
 Binary& Binary::operator*=(const Binary& other) {
-    empty_error();
-    other.empty_error();
     *this = *this * other;
     return *this;
 }
 
 Binary& Binary::operator/=(const Binary& other) {
-    empty_error();
-    other.empty_error();
     *this = *this / other;
     return *this;
 }
 
-// Преобразование в десятичную систему
-unsigned long Binary::to_decimal() const {
-    unsigned long decimal = 0;
-    unsigned long base = 1;
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        decimal += bits[i] * base;
-        base *= 2;
+unsigned long long Binary::to_decimal() const {
+    unsigned long long result = 0;
+    for (unsigned int i = 0; i < bit_size; ++i) {
+        result += bits[i] * (1ULL << i);
     }
-    return decimal;
+    return result;
 }
 
-// Преобразование из строки двоичного числа
-void Binary::from_binary_string(const std::string& binaryStr) {
-    if (binaryStr.length() != bitSize) {
-        throw std::invalid_argument("Длина строки не соответствует размеру Binary.");
-    }
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        char c = binaryStr[bitSize - 1 - i];
-        if (c == '0') {
-            bits[i] = 0;
-        } else if (c == '1') {
-            bits[i] = 1;
-        } else {
-            throw std::invalid_argument("Строка должна содержать только '0' или '1'.");
-        }
-    }
-}
-
-// Преобразование из десятичного числа
-void Binary::from_decimal(unsigned long decimal) {
-    if ((bitSize < sizeof(unsigned long) * 8) && (decimal >= (1UL << bitSize))) {
-        throw std::overflow_error("Число превышает допустимый размер.");
-    }
-    for (unsigned int i = 0; i < bitSize; ++i) {
-        bits[i] = decimal % 2;
-        decimal /= 2;
-    }
-}
-
-// Получение строки представления двоичного числа
 std::string Binary::to_binary_string() const {
     std::string str;
-    str.reserve(bitSize);
-    for (int i = bitSize - 1; i >= 0; --i) {
+    str.reserve(bit_size);
+    for (int i = bit_size - 1; i >= 0; --i) {
         str += (bits[i] ? '1' : '0');
     }
     return str;
 }
 
-// Получение размера (количество бит)
 unsigned int Binary::size() const {
-    return bitSize;
+    return bit_size;
 }
 
-// Проверка на пустоту
 bool Binary::is_empty() const {
-    return bitSize == 0;
+    return bit_size == 0;
 }
 
-// Вспомогательные методы
-
-// Проверка, что размеры двух чисел совпадают
-void Binary::ensure_same_size(const Binary& other) const {
-    if (bitSize != other.bitSize) {
-        throw std::invalid_argument("Размеры чисел должны совпадать.");
-    }
-}
-
-// Выброс ошибки на пустоту
 void Binary::empty_error() const {
     if (is_empty()) {
         throw std::invalid_argument("Отсутствует значение Binary!");
     }
+}
+
+unsigned int Binary::significant_bits(unsigned long long value) {
+    unsigned int count = 0;
+    while (value > 0) {
+        count++;
+        value >>= 1;
+    }
+    return count;
+}
+
+void Binary::update_size() {
+    for (int i = 99; i >= 0; --i) {
+        if (bits[i] != 0) {
+            bit_size = i + 1;
+            return;
+        }
+    }
+    bit_size = 0;
+}
+
+void Binary::shift_left() {
+    for (unsigned int i = 99; i > 0; --i) {
+        bits[i] = bits[i - 1];
+    }
+    bits[0] = 0;
 }
