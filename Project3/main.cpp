@@ -31,13 +31,16 @@ static void print_menu() {
         << "14. Выполнить операцию A > B\n"
         << "15. Выполнить операцию A <= B\n"
         << "16. Выполнить операцию A >= B\n\n"
-        << "17. Выход\n\n";
+        << "17. Возведение в степень\n\n"
+        << "18. Выход\n\n";
 }
+
 static void print_sub_menu() {
     std::cout << "\nВыберите переменную\n"
         << "1. A\n"
         << "2. B\n";
 }
+
 static unsigned int input_uint(const char* message) {
     unsigned int size;
     while (true) {
@@ -63,24 +66,22 @@ static unsigned int input_variable() {
 }
 
 static Binary input_binary() {
-    unsigned int size = input_uint("Введите размер -> ");
     std::string binary_x;
 
     std::cout << "Введите двоичное число -> ";
     std::cin >> binary_x;
-    
+
     return Binary(binary_x);
 }
 
 static Binary input_decimal() {
-    unsigned int size = input_uint("Введите размер -> ");
-    int x = input_uint("Введите беззнаковое десятичное число -> ");
-
-    return Binary(x, size);
+    unsigned int x = input_uint("Введите беззнаковое десятичное число -> ");
+    return Binary(x);
 }
 
 int main() {
     setlocale(LC_ALL, "Russian");
+
     Binary binary_a;
     Binary binary_b;
     Binary res;
@@ -97,12 +98,12 @@ int main() {
             switch (choice) {
             case 1:
                 switch (input_variable()) {
-                    case 1:
-                        binary_a = input_binary();
-                        break;
-                    case 2:
-                        binary_b = input_binary();
-                        break;
+                case 1:
+                    binary_a = input_binary();
+                    break;
+                case 2:
+                    binary_b = input_binary();
+                    break;
                 }
                 break;
             case 2:
@@ -125,12 +126,10 @@ int main() {
                     in_file.close();
                     switch (input_variable()) {
                     case 1:
-                        binary_a = Binary(binary_x.length());
-                        binary_a.from_binary_string(binary_x);
+                        binary_a = Binary(binary_x);
                         break;
                     case 2:
-                        binary_b = Binary(binary_x.length());
-                        binary_b.from_binary_string(binary_x);
+                        binary_b = Binary(binary_x);
                         break;
                     }
                 }
@@ -169,14 +168,14 @@ int main() {
                     std::cout << "Переменная B - Двоичный вид: " << binary_b.to_binary_string() << " Десятичный вид: " << binary_b.to_decimal() << std::endl;
                     break;
                 }
-                break;     
+                break;
             case 6:
                 res = binary_a + binary_b;
                 std::cout << "Двоичный вид: " << res.to_binary_string() << " Десятичный вид: " << res.to_decimal() << std::endl;
                 break;
             case 7:
                 res = binary_a - binary_b;
-                std::cout << "Двоичный вид: " << res.to_binary_string() << " Десятичный вид: " << res.to_decimal() << std::endl;      
+                std::cout << "Двоичный вид: " << res.to_binary_string() << " Десятичный вид: " << res.to_decimal() << std::endl;
                 break;
             case 8:
                 res = binary_a * binary_b;
@@ -216,6 +215,18 @@ int main() {
                 std::cout << (binary_a >= binary_b ? "True" : "False") << std::endl;
                 break;
             case 17:
+                switch (input_variable()) {
+                case 1:
+                    res = binary_a ^ input_uint("Введите степень -> ");
+                    std::cout << "Двоичный вид: " << res.to_binary_string() << " Десятичный вид: " << res.to_decimal() << std::endl;
+                    break;
+                case 2:
+                    res = binary_b ^ input_uint("Введите степень -> ");
+                    std::cout << "Двоичный вид: " << res.to_binary_string() << " Десятичный вид: " << res.to_decimal() << std::endl;
+                    break;
+                }
+                break;
+            case 18:
                 exit = true;
                 break;
             default:
